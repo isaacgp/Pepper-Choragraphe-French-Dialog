@@ -1,0 +1,276 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+body {
+    font-size: 50px;
+    font-family: "Courier New";
+    font-weight: bold;
+}
+
+.fullscreen {
+    height: 800px;
+    margin: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+#image_logo {
+    background-image: url(media/logo.jpg);
+}
+
+#image_pepper {
+    background-image: url(media/pepper.jpg);
+}
+
+.big_button {
+    font-size: 96px;
+    width: 250px;
+    height: 250px;
+    margin-top: 200px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 10px;
+    border-width: 2px;
+    /* border-color: #2272bf; */
+    border-style: solid;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button_yes {
+    border-color: #008000;
+    background-color: #008000;
+}
+
+.button_no {
+    border-color: #800000;
+    background-color: #800000;
+}
+
+.survey_button {
+    font-size: 180px;
+    width: 250px;
+    height: 250px;
+    margin-top: 275px;
+    margin-left: 15px;
+    margin-right: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /*c'est necessaire de ecrire de text pour faire fonctionner le bouton, donc ici je peux cacher le text */
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+    .big_button a, .survey_button a {
+        text-decoration: none;
+        color: white;
+    }
+
+.title {
+    margin-top: 80px;
+    justify-content: center;
+    font-size: 80px;
+}
+
+.survey_button_Happy {
+    background-image: url(media/Happy.png)
+}
+
+.survey_button_NoExpression {
+    background-image: url(media/NoExpression.png)
+}
+
+.survey_button_Mad {
+    background-image: url(media/Mad.png)
+}
+
+.button1 {
+    position: relative;
+    width: 35%;
+    height: 35%;
+    float: left;
+    border-color: white;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.button2 {
+    position: relative;
+    width: 35%;
+    height: 35%;
+    float: right;
+    border-color: white;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.button3 {
+    position: relative;
+    width: 35%;
+    height: 35%;
+    left: 0px;
+    top: 168px;
+    border-color: white;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.button4 {
+    position: relative;
+    width: 35%;
+    height: 35%;
+    left: 352px;
+    top: 132px;
+    border-color: white;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.back_button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 20%;
+    height: 20%;
+    float: right;
+}
+
+.button {
+    position: relative;
+    width: 50%;
+    height: 50%;
+    float: left;
+    border-color: white;
+    background-color: transparent;
+}
+
+.container {
+    left: 0px;
+    width: 333px;
+    height: 200px;
+}
+
+    /* Clear floats after the columns */
+    /*.row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }*/
+
+    .container img {
+        width: 100%;
+        height: auto;
+    }
+
+/* The expanding image container (positioning is needed to position the close button and the text) */
+.big_container {
+    position: absolute;
+    display: none;
+    left: 303px;
+    width: 922px;
+    height: 790px;
+}
+
+img {
+    width: 300%;
+    height: auto;
+}
+
+/* Expanding image text */
+#imgtext {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: white;
+    font-size: 20px;
+}
+
+.row {
+    position: absolute;
+    left: 0px;
+}
+
+/* Closable button inside the image */
+.closebtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.split4 {
+    height: 35%;
+    width: 35%;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    padding-top: 20px;
+    color: transparent;
+}
+
+/* Control the left side */
+.leftu {
+    left: 0;
+    color: transparent;
+    border-radius: 50%;
+}
+
+/* Control the right side */
+.rightu {
+    right: 0;
+    color: transparent;
+    border-radius: 50%;
+}
+/* Control the left side */
+.leftd {
+    left: 0;
+    top: 50%;
+    color: transparent;
+    border-radius: 50%;
+}
+
+/* Control the right side */
+.rightd {
+    right: 0;
+    top: 50%;
+    color: transparent;
+    border-radius: 50%;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.home_cover {
+    background-image: url(media/robot-logo.png);
+    background-size: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    left: 0px;
+    top: 0px;
+    height: 800px;
+    color: transparent;
+}

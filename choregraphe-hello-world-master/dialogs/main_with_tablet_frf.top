@@ -1,0 +1,226 @@
+topic: ~main_with_tablet()
+language: frf
+
+### reference http://doc.aldebaran.com/2-4/naoqi/interaction/dialog/dialog-syntax_full.html#dialog-rules
+### http://doc.aldebaran.com/2-1/naoqi/audio/alanimatedspeech_advanced.html
+
+# Defining extra concepts out of words or group of words
+#concept:(bonjour) [bonjour salut hey salutations "bonjour"]
+
+# Catching inputs and triggering outputs
+#u:(e:onStart) $onStopped=1
+
+# Replying to speech
+#u:(~bonjour) ~bonjour
+
+##### CONCEPTS #####
+
+### Human Concepts
+concept:(non) [non "non merci"] ### c'est un shortcut pour pas écrire "non merci", c'est plus rapide de écrire ~non
+concept:(oui) [oui "oui bien sûr"]
+concept:(répéter) [Veuillez répéter "Veuillez répéter"]
+concept:(arreter) [arreter "arreter"]
+concept:(au_revoir) [au revoir "au revoir"]
+
+concept:(bon_choix) [Bon choix "tu as fait un bon choix"]
+
+### Robot Concepts
+concept:(pepper) \rspd=120\ Pèpper \rspd=100\
+concept:(cool) \pau=250\ ^rand["OK!" "bien!"] ### Vouz pouvez dire "ok!" ou "bien" au hasard, pour faire une dialogue plus naturelle
+concept:(pas_compris) ^rand["Desolé, j'ai ne comprends pas"]
+
+##### DIALOG #####
+
+u:(~arreter) $onStopped=1 ### Le symbol $ c'est pour utiliser une variable, cette variables sont defini dans le Edit Box en Choregraphe, ils sont de sorti et entre du bloc.
+u:(e:onStart) ^gotoReactivate(init_variables) ### Le simbol ^ c'est pour sauter à une autre ligne de code "Go to line" dans cette document.
+
+u:(e:Animaux)  ^gotoReactivate(animaux2)
+u:(e:SportsMusique)  ^gotoReactivate(sportsMusique)
+u:(e:Danser)  ^gotoReactivate(danser)
+u:(e:Autres)  ^gotoReactivate(autres)
+
+
+### Init variables
+proposal:%init_variables
+	\pau=2000\ ### Faire une pause pour permettre le robot de courir le code.
+    $HelloWorld/Adverb="" Bonjour, $HelloWorld/Home=1 \pau=200\ Je suis Pepper, bienvenue à l'association Robots!, \pau=500\ ^gotoReactivate(init_tablet)
+    
+
+### My Tablet Intro
+proposal:%init_tablet
+       $HelloWorld/Home=1 \pau=200\ qu'est-ce que vous voulez faire? \pau=1000\
+	 
+            u1:([À propos de moi e:HelloWorld/bPepper]) ~cool \pau=500\ ^gotoReactivate(self_presentation) ### Le simbol u1 c'est pour attendre une réponse, cette option attendre le son "À propos de moi" ou le Event "HelloWorld/bPepper", cet'event arrive quand le bouton "à propos de moi" est appuyé.
+            u1:([L'Equipe e:HelloWorld/bEquipe]) ~bon_choix \pau=500\ ^gotoReactivate(equipe) ### Quand les conditions sont remplis, le robot va dire le texte écrire sur ~bon_choix, il va attendre 0.5 secondes et il va sauter à une autre ligne de code, à "equipe".
+            u1:([Les Projets e:HelloWorld/bProjets]) ~bon_choix \pau=500\  ^gotoReactivate(projets)
+            u1:([Jouons e:HelloWorld/bJouons]) ^run(animations/Stand/Emotions/Positive/Happy_2) Bien sûr! \pau=750\  ^gotoReactivate(jouons) ### il va à faire une animation déjà programmé, http://doc.aldebaran.com/2-1/naoqi/audio/alanimatedspeech_advanced.html
+            
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\ ^stayInScope
+            u1:(~répéter) Je suis Pepper, bienvenue à la association Robots!, \pau=500\ qu'est-ce que vous aimerez faire? ^stayInScope
+			u1:([e:HelloWorld/AuRevoir])Ok, \pau=500\ ^gotoReactivate(survey)
+    
+ 
+### Self presentation
+
+proposal: %self_presentation
+
+    $HelloWorld/Pepper=1
+    Je suis un robot humanoïde, conçu en France, développé en France et au Japon, et construit en Chine.
+    \pau=1000\ ^gotoReactivate(init_tablet)
+    
+
+	
+### L'equipe    
+proposal:%equipe
+    Ici $HelloWorld/Equipe=1 vous pouvez en apprendre un peu plus sur l'équipe qui travaille dans l'association \pau=1000\
+    
+            u1:([Sophie e:HelloWorld/fEquipe/Sophie]) Sophie ~cool \pau=500\ Elle est... ^stayInScope
+
+            u1:([Noemie e:HelloWorld/fEquipe/Noemie]) Noemie ~bon_choix \pau=500\ ^stayInScope
+
+            u1:([Elodie e:HelloWorld/fEquipe/Elodie]) Elodie ~bon_choix \pau=500\  ^stayInScope
+
+            u1:([Isaac e:HelloWorld/fEquipe/Isaac]) Isaac ^run(animations/Stand/Emotions/Positive/Happy_2)  ^stayInScope
+            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+
+### Projets    
+proposal:%projets
+    Ici $HelloWorld/Projets=1 vous pouvez connaître les projets qu'on fait dans l'Association. \pau=1000\
+    
+            u1:([Rob'Autisme e:HelloWorld/fprojets/RobAutisme]) Rob'Autisme!,  ~cool \pau=500\ $HelloWorld/RobAutisme=1
+
+            u1:([Rob'Zheimer e:HelloWorld/fprojets/RobZheimer]) Rob'Zaillemeur!, ~bon_choix \pau=500\ $HelloWorld/RobZheimer=1 ^stayInScope
+
+            u1:([Rob'Educ e:HelloWorld/fprojets/RobEduc]) Rob'Educ! ~bon_choix \pau=500\ $HelloWorld/RobEduc=1 ^stayInScope
+            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+
+### Jouons    
+proposal:%jouons
+    ~cool $HelloWorld/Jouons=1 Je imites des animaux, Danser, faire des sports, jouer de la musique, ou autres choses. ^run(animations/Stand/Emotions/Enthusiastic/Enthusiastic_1) \pau=1000\
+    
+            u1:([Animaux e:HelloWorld/fjouons/Animaux]) Animaux ~cool \pau=500\ ^gotoReactivate(animaux)
+
+            u1:([Danser e:HelloWorld/fjouons/Danser]) Danser ~bon_choix \pau=500\ ^gotoReactivate(danser)
+
+            u1:([Sports et Musique e:HelloWorld/fjouons/SportsMusique]) Sports et Musique ~bon_choix \pau=500\  ^gotoReactivate(sportsMusique)
+
+            u1:([Autres e:HelloWorld/fjouons/Autres]) Autres ^run(animations/Stand/Emotions/Positive/Happy_2)  ^gotoReactivate(autres)
+            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+
+### Animaux    backup
+proposal:%animaux_backup
+    ~cool $HelloWorld/Animaux=1 Choisez un animal \pau=1000\
+    
+            u1:([L'Elephant e:HelloWorld/fjouons/fanimaux/Elephant]) L'Elephant ~cool \pau=500\ $DoElephant=1
+
+            u1:([La Souris e:HelloWorld/fjouons/fanimaux/Souris]) La Souris ~bon_choix \pau=500\ $DoSouris=1
+
+            u1:([Le gorille e:HelloWorld/fjouons/fanimaux/Gorille]) Le gorille ~bon_choix \pau=500\  $DoGorille=1
+            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+
+
+### Animaux    
+proposal:%animaux
+	~cool $HelloWorld/Animaux=1 je vais imiter un animal et tu va deviner le nom \pau=500\ ^rand["$DoElephant=1 $myAnimal=1" "$DoSouris=1 $myAnimal=2"  "$DoGorille=1 $myAnimal=3"] 
+	
+### Animaux    
+proposal:%animaux2
+	\pau=500\ qu'est-ce que c'est? \pau=1000\
+			
+            u1:([L'Elephant e:HelloWorld/fjouons/fanimaux/Elephant]) ["$myAnimal==1 Bonne Travail! \pau=500\ ^gotoReactivate(jouons)" "désolé, ce n'est l'Elephant  \pau=500\ ^stayInScope"]
+            u1:([La Souris e:HelloWorld/fjouons/fanimaux/Souris]) ["$myAnimal==2 Bonne Travail! \pau=500\ ^gotoReactivate(jouons) " "désolé, ce n'est la Souris \pau=500\ ^stayInScope"] 
+            u1:([Le gorille e:HelloWorld/fjouons/fanimaux/Gorille]) ["$myAnimal==3 Bonne Travail! \pau=500\ ^gotoReactivate(jouons)" "désolé, ce n'est le Gorille  \pau=500\ ^stayInScope"]
+			            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+			
+### SportsMusique    
+proposal:%sportsMusique
+    ~cool $HelloWorld/SportsMusique=1 Choisez un sport ou instrument \pau=1000\
+    
+            u1:([Golf e:HelloWorld/fjouons/fsportsMusique/Golf]) J'aime le Golf \pau=500\ $DoGolf=1
+            u1:([Football e:HelloWorld/fjouons/fsportsMusique/Football]) Je suis fan de Football, bon choix \pau=200\ $DoFootball=1
+            u1:([Guitar e:HelloWorld/fjouons/fsportsMusique/Guitar]) Regarde ça \pau=500\ $DoGuitar=1
+            u1:([Saxophone e:HelloWorld/fjouons/fsportsMusique/Saxophone]) Cool  \pau=200\ $DoSaxophone=1
+            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+### Danser    
+proposal:%danser
+    ~cool $HelloWorld/Danser=1 Choisez une danse \pau=1000\
+    
+            u1:([Disco e:HelloWorld/fjouons/fdanser/Disco]) J'aime le Disco \pau=500\ $DoDisco="Disco"
+            u1:([Headbang e:HelloWorld/fjouons/fdanser/Headbang]) ooh Headbang \pau=500\ $DoDisco="Headbang"
+            u1:([Tai Chi Chuan e:HelloWorld/fjouons/fdanser/TaiChiChuan])  bon choix \pau=200\ $DoTaiChi=1
+            u1:([Dab e:HelloWorld/fjouons/fdanser/Dab]) bon choix \pau=500\ $DoDisco="Dab"
+            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+			
+
+### Autres    
+proposal:%autres
+    ~cool $HelloWorld/Autres=1 Choisez une action \pau=1000\
+    
+            u1:([Prendre une photo e:HelloWorld/fjouons/fautres/photo]) bien sûr! \pau=500\ $DoPicture=1
+            u1:([Aspirateur e:HelloWorld/fjouons/fautres/Aspirateur]) \pau=200\ bon choix \pau=200\ $DoVacuum=1
+            u1:([Mystique e:HelloWorld/fjouons/fautres/Mystique]) \pau=200\ bon choix \pau=200\ $DoMystical=1
+            
+            u1:([e:HelloWorld/back_Home]) ^gotoReactivate(init_tablet)
+            u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+			
+
+			
+
+### Survey
+
+
+proposal:%survey
+
+    $HelloWorld/Survey=1 ^stayInScope
+    Comment j'ai fait?
+
+        u1:([bien tres bien "super" parfait e:HelloWorld/SurveyGood])
+            ^run(animations/Stand/Emotions/Positive/Happy_1) Merci! \pau=1000\ ^gotoReactivate(bye)
+
+
+        u1:([normal ok "so-so" "plutôt bien" "pas très bien" e:HelloWorld/SurveyNeutral])
+            ^start(animations/Stand/Emotions/Negative/Sorry_1) \pau=500\ J'essaierai de faire mieux à l'avenir. ^wait(animations/Stand/Emotions/Negative/Sorry_1)
+            $HelloWorld/Adverb="" \pau=1000\
+            ^gotoReactivate(bye)
+
+        u1:(["Pas bien" e:HelloWorld/SurveyBad])
+            ^run(animations/Stand/Emotions/Negative/Sad_1) Je suis désolé. $HelloWorld/Adverb=comunque ^gotoReactivate(bye)
+			
+			
+        u1:(e:Dialog/NotUnderstood) ~pas_compris \pau=250\ Voulez vous répéter ou clicker sur l'écran? \pau=500\^stayInScope
+
+
+
+### Goodbye
+
+proposal: %bye
+
+    $HelloWorld/abientot=1
+    Je suis ["^exist(HelloWorld/Adverb) $HelloWorld/Adverb" "^notExist(HelloWorld/Adverb) "] content d'avoir discuté avec vous. \pau=500\ à bientôt et merci!
+    ^run(animations/Stand/Emotions/Positive/Happy_1)
+	$onStopped=1

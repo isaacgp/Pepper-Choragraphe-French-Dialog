@@ -1,0 +1,576 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.000, minimum-scale = 1.000, maximum-scale = 1.000">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/robotutils.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        body {
+            font-size: 40px;
+            font-family: "Courier New";
+            font-weight: bold;
+            background-image: url(media/robot-logo.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 55%;
+            left: 0px;
+            top: 0px;
+            height: 800px;
+            color: transparent;
+        }
+
+        .fullscreen {
+            height: 800px;
+            margin: 0;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        #image_logo {
+            background-image: url(media/logo.jpg);
+        }
+
+        #image_pepper {
+            background-image: url(media/pepper.jpg);
+        }
+
+        #image_abientot {
+            background-image: url(media/abientot.jpg);
+        }
+
+        .big_button {
+            font-size: 96px;
+            width: 250px;
+            height: 250px;
+            margin-top: 200px;
+            margin-left: 50px;
+            margin-right: 50px;
+            border-radius: 10px;
+            border-width: 2px;
+            /* border-color: #2272bf; */
+            border-style: solid;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button_yes {
+            border-color: #008000;
+            background-color: #008000;
+        }
+
+        .button_no {
+            border-color: #800000;
+            background-color: #800000;
+        }
+
+        .survey_button {
+            font-size: 180px;
+            width: 250px;
+            height: 250px;
+            margin-top: 275px;
+            margin-left: 15px;
+            margin-right: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            /*c'est necessaire de ecrire de text pour faire fonctionner le bouton, donc ici je peux cacher le text */
+            text-indent: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+            .big_button a, .survey_button a {
+                text-decoration: none;
+                color: white;
+            }
+
+        .title {
+            margin-top: 80px;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .survey_button_Happy {
+            background-image: url(media/Happy.png)
+        }
+
+        .survey_button_NoExpression {
+            background-image: url(media/NoExpression.png)
+        }
+
+        .survey_button_Mad {
+            background-image: url(media/Mad.png)
+        }
+
+        .button1 {
+            position: relative;
+            width: 35%;
+            height: 35%;
+            float: left;
+            border-color: white;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        .button2 {
+            position: relative;
+            width: 35%;
+            height: 35%;
+            float: right;
+            border-color: white;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        .button3 {
+            position: relative;
+            width: 35%;
+            height: 35%;
+            left: 0px;
+            top: 168px;
+            border-color: white;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        .button4 {
+            position: relative;
+            width: 35%;
+            height: 35%;
+            left: 352px;
+            top: 132px;
+            border-color: white;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        .back_button {
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            width: 20%;
+            height: 10%;
+            float: right;
+        }
+
+        .button {
+            position: relative;
+            width: 50%;
+            height: 50%;
+            float: left;
+            border-color: white;
+            background-color: transparent;
+        }
+
+        .container {
+            left: 0px;
+            width: 333px;
+            height: 200px;
+        }
+
+            /* Clear floats after the columns */
+            /*.row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }*/
+
+            .container img {
+                width: 100%;
+                height: auto;
+            }
+
+        /* The expanding image container (positioning is needed to position the close button and the text) */
+        .big_container {
+            position: absolute;
+            display: none;
+            left: 303px;
+            width: 922px;
+            height: 790px;
+        }
+
+        img {
+            width: 300%;
+            height: auto;
+        }
+
+        imgProjets {
+            width: 400px;
+            height: auto;
+        }
+
+        /* Expanding image text */
+        #imgtext {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .row {
+            position: absolute;
+            left: 0px;
+        }
+
+        /* Closable button inside the image */
+        .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+        }
+
+        .split4 {
+            height: 40%;
+            width: 40%;
+            position: fixed;
+            z-index: 1;
+            overflow-x: hidden;
+            padding-top: 20px;
+            color: transparent;
+        }
+
+        /* Control the left side */
+        .leftu {
+            left: 0;
+            color: transparent;
+            border-radius: 50%;
+        }
+
+        /* Control the right side */
+        .rightu {
+            right: 0;
+            color: transparent;
+            border-radius: 50%;
+        }
+        /* Control the left side */
+        .leftd {
+            left: 0;
+            top: 50%;
+            color: transparent;
+            border-radius: 50%;
+        }
+
+        /* Control the right side */
+        .rightd {
+            right: 0;
+            top: 50%;
+            color: transparent;
+            border-radius: 50%;
+        }
+
+        .split3 {
+            height: 75%;
+            width: 40%;
+            position: fixed;
+            z-index: 1;
+            overflow-x: hidden;
+            padding-top: 10px;
+            color: transparent;
+        }
+
+
+
+        /* If you want the content centered horizontally and vertically */
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .titleimg {
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+
+        .logo_img {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            top: 75%;
+            width: 100px;
+            height: 70px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div role="main">
+
+        <div id="logo" class="text-center" style="display: none;">
+            <div id="image_logo" class="fullscreen"></div>
+        </div>
+
+        <div id="abientot" class="text-center" style="display: none;">
+            <div id="image_abientot" class="fullscreen"></div>
+        </div>
+
+        <div id="pepper" class="text-center" style="display: none;">
+            <div id="image_pepper" class="fullscreen"></div>
+        </div>
+
+        <div id="yes_no" class="text-center" style="display: none;">
+            <div class="title"></div>
+            <div class="big_button button_yes"><a ontouchstart="setAnswer(true); return false;">Oui</a></div>
+            <div class="big_button button_no"><a ontouchstart="setAnswer(false); return false;">Non</a></div>
+        </div>
+
+        <div id="survey" class="text-center" style="display: none;">
+            <div class="survey_button survey_button_Happy"><a ontouchstart="setSurvey(1); return false;" >Super</a></div>
+            <div class="survey_button survey_button_NoExpression"><a ontouchstart="setSurvey(0); return false;">Bien</a></div>
+            <div class="survey_button survey_button_Mad"><a ontouchstart="setSurvey(-1); return false;" >Pas bien</a></div>
+        </div>
+
+        <div id="home" class="text-center body" style="display: none;">
+            .
+            <div class="split4 leftu">
+                <div onclick="buttons_Home('bPepper'); return false;">
+                    <div class="centered"><a>À propos de moi</a></div>
+                    <img class="logo_img" src="media/AboutMe.png" style=" top: 85%;">
+                </div>
+            </div>
+            <div class="split4 rightu">
+                <div onclick="buttons_Home('bEquipe'); return false;">
+                    <div class="centered"><a>L'Equipe</a></div>
+                    <img class="logo_img" src="media/equipe.png" style="width: 100px; height: 70px;  top: 75%;">
+                </div>
+            </div>
+            <div class="split4 leftd">
+                <div onclick="buttons_Home('bProjets'); return false;">
+                    <div class="centered"><a>Les Projets</a></div>
+                    <img class="logo_img" src="media/projets.png" style="width: 100px; height: 70px;  top: 85%;">
+                </div>
+            </div>
+            <div class="split4 rightd">
+                <div onclick="buttons_Home('bJouons'); return false;">
+                    <div class="centered"><a>Jouer</a></div>
+                    <img class="logo_img" src="media/Jouer.png" style="width: 100px; height: 70px;  top: 75%;">
+                </div>
+            </div>
+            <div class="back_button" onclick="fAuRevoir(true); return false;">
+                <img src="media/aurevoir.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="jouons" class="text-center body" style="display: none;">
+            <div class="split4 leftu" onclick="fjouons('Animaux'); return false;">
+                <div class="centered"><a>Animaux</a></div>
+                <img class="logo_img" src="media/Animaux.png">
+            </div>
+            <div class="split4 rightu" onclick="fjouons('Danser'); return false;">
+                <div class="centered"><a>Danser</a></div>
+                <img class="logo_img" src="media/Danser.png">
+            </div>
+            <div class="split4 leftd" onclick="fjouons('Sportes et Musique'); return false;">
+                <div class="centered"><a>Sports et Musique</a></div>
+                <img class="logo_img" src="media/SportsetMusique.png" style="top:88%;">
+            </div>
+            <div class="split4 rightd" onclick="fjouons('Autres')">
+                <div class="centered"><a>Autres</a></div>
+                <img class="logo_img" src="media/Autres.png">
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="animaux" class="text-center body" style="display: none;">
+            <div class="split4 leftu" onclick="fanimaux('Elephant'); return false;">
+                <img class="centered" src="media/elephant.png" style="width: 300px; height: 210px;">
+                <div class="titleimg"><a>L'Elephant</a></div>
+            </div>
+            <div class="split4 rightu" onclick="fanimaux('Souris'); return false;">
+                <img class="centered" src="media/souris.png" style="width: 300px; height: 210px;">
+                <div class="titleimg"><a>La Souris</a></div>
+            </div>
+            <div class="split4 leftd" onclick="fanimaux('Gorille'); return false;">
+                <img class="centered" src="media/gorille.png" style="width: 300px; height: 210px;">
+                <div class="titleimg"><a>Le Gorille</a></div>
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="sportsMusique" class="text-center body" style="display: none;">
+            <div class="split4 leftu" onclick="fsportsMusique('Golf'); return false;">
+                <div class="centered"><a>Golf</a></div>
+                <img class="logo_img" src="media/Golf.png">
+            </div>
+            <div class="split4 rightu" onclick="fsportsMusique('Football'); return false;">
+                <div class="centered"><a>Football</a></div>
+                <img class="logo_img" src="media/Football.png">
+            </div>
+            <div class="split4 leftd" onclick="fsportsMusique('Guitar'); return false;">
+                <div class="centered"><a>Guitar</a></div>
+                <img class="logo_img" src="media/Guitar.png">
+            </div>
+            <div class="split4 rightd" onclick="fsportsMusique('Saxophone'); return false;">
+                <div class="centered"><a>Saxophone</a></div>
+                <img class="logo_img" src="media/Saxophone.png">
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="danser" class="text-center body" style="display: none;">
+            <div class="split4 leftu" onclick="fdanser('Tai Chi Chuan'); return false;">
+                <div class="centered"><a>Tai Chi Chuan</a></div>
+                <img class="logo_img" src="media/TaiChiChuan.png" style="top:85%;">
+            </div>
+            <div class="split4 rightu" onclick="fdanser('Disco'); return false;">
+                <div class="centered"><a>Disco</a></div>
+                <img class="logo_img" src="media/disco.png">
+            </div>
+            <div class="split4 leftd" onclick="fdanser('Headbang'); return false;">
+                <div class="centered"><a>Headbang</a></div>
+                <img class="logo_img" src="media/headbang.png">
+            </div>
+            <div class="split4 rightd" onclick="fdanser('Dab'); return false;">
+                <div class="centered"><a>Dab</a></div>
+                <img class="logo_img" src="media/dab.png">
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="autres" class="text-center body" style="display: none;">
+            <div class="split4 leftu" onclick="fautres('Prendre une photo'); return false;">
+                <div class="centered"><a>Prendre une photo</a></div>
+                <img class="logo_img" src="media/PrendreunePhoto.png">
+            </div>
+            <div class="split4 rightu" onclick="fautres('Aspirateur'); return false;">
+                <div class="centered"><a>Aspirateur</a></div>
+                <img class="logo_img" src="media/Aspirateur.png">
+            </div>
+            <div class="split4 leftd" onclick="fautres('Mystique'); return false;">
+                <div class="centered"><a>Mystique</a></div>
+                <img class="logo_img" src="media/Mystique.png">
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="projets" class="text-center body" style="display: none;">
+            <div class="split3" style="left: 0;" onclick="fprojets('RobAutisme'); return false;">
+                <img class="centered" src="media/robAutisme.jpg" alt="RobAutisme" style="width: 430px; height: auto;">
+                <div style="left:150px; top:750px;" id="RobAutisme"><a>Rob'Autisme</a></div>
+            </div>
+            <div class="split3" style="left: 410px;" onclick="fprojets('RobZheimer'); return false;">
+                <img class="centered" src="media/robZheimer.jpg" alt="RobZheimer" style="width: 430px; height: auto;">
+                <div style="left:560px; top:150px;" id="RobZheimer"><a>Rob'Zheimer</a></div>
+            </div>
+            <div class="split3" style="left: 820px;" onclick="fprojets('RobEduc'); return false;">
+                <img class="centered" src="media/robEduc.jpg" alt="RobEduc" style="width: 430px; height: auto;">
+                <div style="left:970px; top:750px;" id="RobEduc"><a>Rob'Educ</a></div>
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="robAutisme" style="display: none;" class="text-center body">
+            <video id="robAutismeVideo" controls onclick="fVideo(true); return false;" style="width:1280px;">
+                <source src="media/RobAutisme.mp4" type="video/mp4">
+                <source src="media/RobAutisme.ogg" type="video/ogg">
+                Your browser does not support HTML video.
+            </video>
+            <div class="back_button" style="z-index: 2"><a onclick="fHome(true); return false;">Home</a></div>
+        </div>
+
+        <div id="robZheimer" class="text-center body" style="display: none;">
+            <div id="robZheimer" style="font-size:8px;">
+                <div style="font-size:54px; color:blue">Rob'Zheimer</div>
+                <div style="font-size:26px; width:700px; text-align:left;">
+                    Rob’Zheimer propose un accompagnement utilisant des robots Nao (SoftBank Robotics) et basé sur la médiation culturelle et artistique. Les ateliers se déroulent sur 20 séances qui alternent 10 séances non robotiques dédié à la préparation du spectacle (enregistrement de la voix, constitution du décor, etc.) et 10 séances de programmation robotique. Un spectacle est préparé et présenté à un public plus large lors d’une 21ème séance.
+                </div>
+                <img src="media/robZheimer.jpg" alt="RobZheimer" style=" position: fixed; width:480px; height:auto; right:0; top:120px;">
+                <div style="font-size:26px; text-align:left;">
+                    Le projet Rob’Zheimer a pour objectif l’amélioration des capacités de communication et le développement de la qualité des interactions sociales individuelles et collectives de personnes souffrant de la maladie d’Alzheimer et maladies apparentées (MAMA). Le travail d’accompagnement thérapeutique effectué pendant les séances se concentre sur l’amélioration de trois niveaux de communication (individuelle, de groupe et sociétale), qui a pour effet la reconstruction identitaire des participants.
+                </div>
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+        <div id="robEduc" class="text-center body" style="display: none;">
+            <div id="robEduc" style="font-size:8px; ">
+                <div style="font-size:54px; color:blue">Rob'Educ</div>
+                <div style="font-size:26px; width:700px; text-align:left;">
+                    Le programme « Évolution des métiers » porte une réflexion sur l’impact de la numérisation et de la robotisation des tâches actuellement réalisées par les humains pour assurer le fonctionnement de la société. Il consiste à sélectionner un métier, analyser ses composantes et caractéristiques, le robotiser intégralement en incluant au maximum l’ensemble de ses composantes et analyser l’impact de cet acte de robotisation sur les professionnels ainsi que sur les destinataires du service associé au métier.
+                </div>
+                <img src="media/robEduc.jpg" alt="RobEduc" style=" position: fixed; width:420px; height:auto; right:0; top:100px;">
+                <div style="font-size:26px; text-align:left;">
+                    Il ne s’agit pas ici de supprimer l’être humain de la chaine sociale, mais de définir d’un côté ce qu’apporte spécifiquement un être humain dans la réalisation d’une tâche, et ce que n’apporte pas un robot, et de l’autre côté ce qu’apporte spécifiquement un robot dans la réalisation de cette même tâche, et que n’apporte pas un être humain.
+                </div>
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+
+
+        <div id="equipe" style="display: none;">
+            <div class="row">
+                <div class="container">
+                    <img src="media/img_nature.jpg" alt="Sophie" onclick="fEquipe(this) ; return false; ">
+                </div>
+                <div class="container">
+                    <img src="media/img_snow.jpg" alt="Noemie" onclick="fEquipe(this); return false;">
+                </div>
+                <div class="container">
+                    <img src="media/img_mountains.jpg" alt="Elodie" onclick="fEquipe(this); return false;">
+                </div>
+                <div class="container">
+                    <img src="media/img_lights.jpg" alt="Isaac" onclick="fEquipe(this); return false;">
+                </div>
+            </div>
+            <div class="big_container img">
+                <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+                <img id="expandedImg" style="width:106%">
+                <div id="imgtext" style="        color: black; font-size: 48px; left:400px; bottom:50px;"></div>
+            </div>
+            <div class="back_button" onclick="fHome(true); return false;">
+                <img src="media/home.png" style="width: 100px; height: 70px;  top: 75%;">
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
